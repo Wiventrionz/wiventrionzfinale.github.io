@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="style.css">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advent & Justice Click Counter</title>
+    <style>
+        body {
+            margin: 0;
+            background: #000;
+            overflow: hidden;
+            font-family: sans-serif;
+            color: white;
+        }
+        .character {
+            position: absolute;
+            width: 64px;
+            height: 64px;
+            user-select: none;
+            cursor: pointer;
+        }
+        .menu {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.6);
+            padding: 10px;
+            border: 1px solid white;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="menu" id="menu"></div>
+
+<script>
+    const names = ["Shiori", "Biboo", "Nerissa", "Fuwawa", "Mococo", "ERB", "Gigi", "Ceci", "Raora"];
+    const counts = {};
+    const menu = document.getElementById("menu");
+    const characters = [];
+    const screenW = window.innerWidth;
+    const screenH = window.innerHeight;
+
+    names.forEach(name => {
+        counts[name] = 0;
+        const img = document.createElement("img");
+        img.src = `images/${name}.png`;
+        img.className = "character";
+        img.style.left = `${Math.random() * (screenW - 64)}px`;
+        img.style.top = `${Math.random() * (screenH - 64)}px`;
+        document.body.appendChild(img);
+
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 1 + Math.random() * 1.5;
+        const dx = Math.cos(angle) * speed;
+        const dy = Math.sin(angle) * speed;
+
+        characters.push({el: img, x: parseFloat(img.style.left), y: parseFloat(img.style.top), dx, dy, name});
+
+        img.addEventListener("click", () => {
+            counts[name]++;
+            updateMenu();
+            const audio = new Audio(`${name}.mp3`);
+            audio.play();
+        });
+    });
+
+    function updateMenu() {
+        menu.innerHTML = names.map(n => `${n}: ${counts[n]}`).join("<br>");
+    }
+
+    function animate() {
+        characters.forEach(c => {
+            c.x += c.dx;
+            c.y += c.dy;
+
+            if (c.x <= 0 || c.x >= screenW - 64) c.dx *= -1;
+            if (c.y <= 0 || c.y >= screenH - 64) c.dy *= -1;
+
+            c.el.style.left = `${c.x}px`;
+            c.el.style.top = `${c.y}px`;
+        });
+        requestAnimationFrame(animate);
+    }
+
+    updateMenu();
+    animate();
+</script>
+</body>
+</html>

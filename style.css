@@ -1,0 +1,58 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #111;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+}
+
+#clickPanel {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 12px 16px;
+    border-radius: 12px;
+    max-height: 80vh;
+    overflow-y: auto;
+    font-size: 14px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.8);
+}
+
+#clickPanel h2 {
+    margin: 0 0 8px;
+    font-size: 16px;
+    text-align: center;
+    color: #ffc107;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 4px;
+}
+
+#clickPanel ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#clickPanel li {
+    margin: 4px 0;
+    line-height: 1.4;
+    color: #ddd;
+}
+
+@media (max-width: 600px) {
+    .character {
+        width: 70px;
+        height: 70px;
+    }
+
+    #clickPanel {
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    #clickPanel h2 {
+        font-size: 14px;
+    }
+}
